@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Campaign — Jul 2026 → Apr 2027</title>
+<style>
+:root{
+  --bg:#07090f; --card:#131923; --border:#1c2333; --accent:#7c3aed; --glow:rgba(124,58,237,.18);
+  --t1:#f1f5f9; --t2:#94a3b8; --t3:#475569;
+  --p1:#fb923c; --p2:#a78bfa; --p3:#22d3ee; --p4:#f472b6; --p5:#f59e0b; --p6:#34d399;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.55;padding:22px 16px 86px;max-width:820px;margin:0 auto}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+a{color:inherit;text-decoration:none}
+section{scroll-margin-top:16px}
+h2{font-size:12px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--t3);margin:38px 0 14px}
+h2 b{color:var(--accent)}
+
+/* ===== Header ===== */
+header.hero{padding:10px 0 6px}
+.eyebrow{font-size:10.5px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(28px,7vw,42px);font-weight:900;line-height:1.08;letter-spacing:-.5px;margin:8px 0 2px}
+h1 .range{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:clamp(13px,3.4vw,17px);font-weight:600;color:var(--t2);letter-spacing:1px;margin-top:6px}
+.subtitle{color:var(--t2);font-style:italic;font-size:14.5px;margin:10px 0 18px}
+.progress-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.progress-label{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--t2);margin-bottom:9px}
+.progress-label b{color:var(--t1);font-size:14px;letter-spacing:.5px}
+.pbar{height:9px;background:#0a0e16;border:1px solid var(--border);border-radius:99px;overflow:hidden}
+.pbar>i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--p1),var(--p2),var(--p3),var(--p4),var(--p5),var(--p6));min-width:4px;transition:width .6s}
+
+/* ===== Tracks ===== */
+.tracks{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:640px){.tracks{grid-template-columns:1fr 1fr}}
+.track{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:15px 16px}
+.track h3{font-size:14px;font-weight:800;margin-bottom:6px}
+.track p{font-size:13px;color:var(--t2)}
+.track p b{color:var(--t1);font-weight:600}
+
+/* ===== Timeline ===== */
+.tl{position:relative;padding-left:26px}
+.tl::before{content:"";position:absolute;left:7px;top:10px;bottom:10px;width:3px;border-radius:3px;
+  background:linear-gradient(180deg,var(--p1) 0%,var(--p2) 14%,var(--p3) 26%,var(--p4) 34%,var(--p5) 41%,var(--p6) 50%,var(--accent) 70%,var(--accent) 100%);opacity:.85}
+.month{position:relative;background:var(--card);border:1px solid var(--border);border-left:4px solid var(--pc,var(--border));border-radius:14px;margin-bottom:13px}
+.node{position:absolute;left:-25px;top:19px;width:13px;height:13px;border-radius:50%;background:var(--pc,var(--t3));border:3px solid var(--bg)}
+.mhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;cursor:pointer;user-select:none}
+.mname{font-size:16px;font-weight:800}
+.mwks{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;color:var(--t2);margin-top:3px;letter-spacing:.3px}
+.chev{color:var(--t3);font-size:13px;transition:transform .25s}
+.month.open .chev{transform:rotate(180deg)}
+.mbody{display:none;padding:0 16px 15px}
+.month.open .mbody{display:block}
+.mbody li{list-style:none;font-size:13.5px;color:var(--t2);padding:6px 0 6px 22px;position:relative;border-top:1px solid #10141f}
+.mbody li:first-child{border-top:none}
+.mbody li::before{content:"";position:absolute;left:5px;top:13px;width:6px;height:6px;border-radius:2px;background:var(--pc,var(--t3))}
+.mbody li b{color:var(--t1);font-weight:700}
+.mbody li.side::before{border-radius:50%;background:none;border:1.5px solid var(--t3);width:5px;height:5px}
+.mbody li.side{color:var(--t3)}
+.mbody li.side b{color:var(--t2)}
+.here-chip{display:none;font-size:10px;font-weight:800;letter-spacing:1.5px;color:#fff;background:var(--accent);border-radius:999px;padding:3px 10px;white-space:nowrap}
+.month.now{box-shadow:0 0 0 1px var(--accent),0 0 30px var(--glow)}
+.month.now .here-chip{display:inline-block}
+.month.now .node{background:var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(124,58,237,.25)}}
+.big-file{font-size:14.5px}
+
+/* ===== Skills ===== */
+.sk-group{margin-bottom:14px}
+.sk-group h3{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--t2);margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;color:var(--t2);background:var(--card);border:1px solid var(--border);border-radius:999px;padding:4px 11px;white-space:nowrap}
+.chip.hot{color:#c4b5fd;border-color:#2c2150}
+.chip.done{color:var(--p6)}
+
+/* ===== Endgame ===== */
+.endgame{background:linear-gradient(135deg,#161d2e,#10131f);border:1px solid #2a2150;border-radius:16px;padding:20px 18px;box-shadow:0 0 44px var(--glow)}
+.endgame li{list-style:none;font-size:13.5px;color:var(--t2);padding:7px 0 7px 28px;position:relative;border-top:1px solid #1a1f30}
+.endgame li:first-child{border-top:none}
+.endgame li::before{content:"✓";position:absolute;left:2px;top:6px;color:var(--p6);font-weight:800}
+.endgame li b{color:var(--t1);font-weight:700}
+.closing{text-align:center;font-size:clamp(19px,5vw,25px);font-weight:800;font-style:italic;line-height:1.4;margin:34px auto 8px;max-width:520px;background:linear-gradient(90deg,#c4b5fd,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+footer{margin-top:40px;text-align:center;font-size:12px;color:var(--t3);border-top:1px solid var(--border);padding-top:18px}
+
+/* ===== Mini-nav (mobile) ===== */
+#mininav{position:fixed;left:0;right:0;bottom:0;display:flex;background:rgba(10,13,22,.92);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:0 6px calc(env(safe-area-inset-bottom,0px));z-index:100}
+#mininav a{flex:1;text-align:center;padding:12px 2px;font-size:11.5px;font-weight:700;color:var(--t2)}
+#mininav a:active{color:var(--t1)}
+@media(min-width:900px){#mininav{display:none}body{padding-bottom:30px}}
+
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.month.now .node{animation:none}.chev,.pbar>i{transition:none}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* ===== Print ===== */
+@media print{
+ body{background:#fff;color:#111;padding:0;max-width:none}
+ :root{--card:#fff;--border:#ccc;--t1:#111;--t2:#333;--t3:#666}
+ .mbody{display:block!important}
+ .chev,#mininav{display:none!important}
+ .month,.track,.endgame,.progress-card{box-shadow:none;break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .tl::before,.node,.pbar>i{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .closing{color:#111;background:none;-webkit-background-clip:initial;background-clip:initial}
+ .endgame{background:#fff;border-color:#ccc}
+ .chip{color:#333;border-color:#bbb}
+ .chip.hot{color:#5b21b6;border-color:#c4b5fd}
+ .chip.done{color:#047857}
+ .here-chip{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Master Roadmap</div>
+  <h1>The Campaign <span class="range">JUL 2026 → APR 2027</span></h1>
+  <p class="subtitle">One sprint, three payloads: Income · Portfolio · Visa evidence.</p>
+  <div class="progress-card">
+    <div class="progress-label"><b class="mono" id="dayLabel">Day — of 291</b><span class="mono" id="weekLabel"></span></div>
+    <div class="pbar"><i id="pfill" style="width:0%"></i></div>
+  </div>
+</header>
+
+<section id="tracks">
+  <h2><b>01</b> · The Five Tracks</h2>
+  <div class="tracks">
+    <div class="track"><h3>🏗 Build — the 18-week sprint</h3><p>3 unique systems: <b>Contracts-Intelligence Lakehouse + Vendor Graph</b> (W3–8) · <b>Regulatory Change Intelligence</b> (W9–12) · <b>Maritime AIS Streaming</b> (W13–14) · <b>TypeScript MCP port + Next.js graph UI</b> (W15–16). Python deep, TypeScript fluent, SQL expert.</p></div>
+    <div class="track"><h3>💰 Income</h3><p>Upwork <b>$85/hr from Week 1</b> → $120+ after certs. Premium gigs ($800–$5,000 tiers). Monthly ladder: <b>$1.5k Jul → $6k Apr</b>. Visa fund target £10–15k held in USD/GBP.</p></div>
+    <div class="track"><h3>📣 Content</h3><p><b>3 posts/week (54 total)</b> + camera reps 2–3×/week → one recorded public talk by November (GTV evidence).</p></div>
+    <div class="track"><h3>🛂 Relocation</h3><p>Primary: <b>UK Global Talent</b> (file Feb 2027, decision Mar–Apr). Plan B: <b>Germany Opportunity Card</b> (docs prepared in parallel). Optional: Dubai income bridge. Parked: Canada, masters (German technical MSc = Plan C, Oct 2027 intake only if A+B stall).</p></div>
+    <div class="track"><h3>🎓 Credentials</h3><p><b>DP-750</b> (Azure Databricks DE) Week 18 · <b>DP-600</b> (Fabric Analytics) +3–4 weeks · AWS SAA already held.</p></div>
+  </div>
+</section>
+
+<section id="timeline">
+  <h2><b>02</b> · The Timeline</h2>
+  <div class="tl">
+
+    <article class="month" data-y="2026" data-m="6" style="--pc:var(--p1)">
+      <span class="node"></span>
+      <div class="mhead" onclick="toggleMonth(this)" tabindex="0" onkeydown="keyToggle(event,this)"><div><div class="mname">Jul 2026</div><div class="mwks">WKS 1–3 · FOUNDATION → FLAGSHIP START</div></div><span class="here-chip">YOU ARE HERE</span><span class="chev">▾</span></div>
+      <div class="mbody"><ul>
+        <li>Env live; <b>Upwork rate raised to $85 DAY ONE</b></li>
+        <li>Find a Tender + Companies House scraped into dbt warm-up</li>
+        <li>Airflow + CI discipline</li>
+        <li>P1 architecture + multi-source bronze (TED, SAM.gov)</li>
+        <li class="side"><b>Location:</b> order transcripts; verify passport; professionalize payment rails; check German embassy Lagos appointment lead times</li>
+      </ul></div>
+    </article>
+
+    <article class="month" data-y="2026" data-m="7" style="--pc:var(--p2)">
+      <span class="node"></span>
+      <div class="mhead" onclick="toggleMonth(this)" tabindex="0" onkeydown="keyToggle(event,this)"><div><div class="mname">Aug 2026</div><div class="mwks">WKS 4–7 · ENTITY RESOLUTION + AGENT</div></div><span class="here-chip">YOU ARE HERE</span><span class="chev">▾</span></div>
+      <div class="mbody"><ul>
+        <li>ER v1 + 200 labeled pairs → <b>precision/recall measured</b></li>
+        <li>ER v2 LLM-adjudicated</li>
+        <li>Companies House ownership graph + OpenSanctions</li>
+        <li>Hybrid retrieval + reranker (recall@5 measured)</li>
+        <li>LangGraph bid &amp; risk agent + HITL</li>
+        <li><b>5 Hard Questions gate</b></li>
+      </ul></div>
+    </article>
+
+    <article class="month" data-y="2026" data-m="8" style="--pc:var(--p3)">
+      <span class="node"></span>
+      <div class="mhead" onclick="toggleMonth(this)" tabindex="0" onkeydown="keyToggle(event,this)"><div><div class="mname">Sep 2026</div><div class="mwks">WK 8 → WKS 9–10 · SHIP + START P2</div></div><span class="here-chip">YOU ARE HERE</span><span class="chev">▾</span></div>
+      <div class="mbody"><ul>
+        <li><b>Python MCP server live in Claude Desktop (Sep 6)</b></li>
+        <li>Eval regression CI; P1 Loom</li>
+        <li><b>Light job applications BEGIN</b></li>
+        <li>Regulatory sources ingested + version store; semantic diff engine</li>
+        <li class="side"><b>Location:</b> GTV referees shortlisted + briefed; client letters requested</li>
+      </ul></div>
+    </article>
+
+    <article class="month" data-y="2026" data-m="9" style="--pc:var(--p4)">
+      <span class="node"></span>
+      <div class="mhead" onclick="toggleMonth(this)" tabindex="0" onkeydown="keyToggle(event,this)"><div><div class="mname">Oct 2026</div><div class="mwks">WKS 11–14 · P2 SHIP + STREAMING</div></div><span class="here-chip">YOU ARE HERE</span><span class="chev">▾</span></div>
+      <div class="mbody"><ul>
+        <li>Cited RAG, <b>citation-accuracy ≥95% eval</b></li>
+        <li>Azure OpenAI deploy + guardrails + audit <b>(Oct 4)</b></li>
+        <li>AIS live streaming + watermarking</li>
+        <li>Congestion index + incident agent <b>(Oct 18)</b></li>
+        <li class="side"><b>Location:</b> GTV statement skeleton; letters collected</li>
+        <li class="side"><b>Travel window opens:</b> Nairobi leg possible late Oct (Wks 15–16 are lighter)</li>
+      </ul></div>
+    </article>
+
+    <article class="month" data-y="2026" data-m="10" style="--pc:var(--p5)">
+      <span class="node"></span>
+      <div class="mhead" onclick="toggleMonth(this)" tabindex="0" onkeydown="keyToggle(event,this)"><div><div class="mname">Nov 2026</div><div class="mwks">WKS 15–18 · TS + LAUNCH + CERT</div></div><span class="here-chip">YOU ARE HERE</span><span class="chev">▾</span></div>
+      <div class="mbody"><ul>
+        <li>TS MCP port; <b>Next.js vendor-graph explorer live on Vercel (Nov 1)</b></li>
+        <li>Market launch — 3 premium gigs + Looms + 10 outreach</li>
+        <li>DP-750 sat; <b>SPRINT COMPLETE Nov 15</b></li>
+        <li class="side"><b>Location:</b> public talk delivered + recorded; evidence list frozen; UK-vs-Germany decision checkpoint</li>
+        <li class="side"><b>Travel:</b> Kigali leg (Norrsken workation)</li>
+      </ul></div>
+    </article>
+
+    <article class="month" data-y="2026" data-m="11" style="--pc:var(--p6)">
+      <span class="node"></span>
+      <div class="mhead" onclick="toggleMonth(this)" tabindex="0" onkeydown="keyToggle(event,this)"><div><div class="mname">Dec 2026</div><div class="mwks">CONVERSION + EVIDENCE FILE</div></div><span class="here-chip">YOU ARE HERE</span><span class="chev">▾</span></div>
+      <div class="mbody"><ul>
+        <li>DP-600; application surge; first premium contracts</li>
+        <li>GTV endorsement file written <b>"like a flagship project"</b></li>
+        <li class="side"><b>Travel:</b> Zanzibar leg (decompression + remote work)</li>
+        <li class="side"><b>Rest is part of the plan.</b></li>
+      </ul></div>
+    </article>
+
+    <article class="month" data-y="2027" data-m="0" style="--pc:var(--accent)">
+      <span class="node"></span>
+      <div class="mhead" onclick="toggleMonth(this)" tabindex="0" onkeydown="keyToggle(event,this)"><div><div class="mname">Jan 2027</div><div class="mwks">FILE FINAL + INTERVIEWS RAMP</div></div><span class="here-chip">YOU ARE HERE</span><span class="chev">▾</span></div>
+      <div class="mbody"><ul>
+        <li>Adviser review (optional); <b>endorsement file final</b></li>
+        <li>Interviews ramp (new-year hiring wave)</li>
+        <li>Income <b>≥$4.5k/mo target</b></li>
+      </ul></div>
+    </article>
+
+    <article class="month" data-y="2027" data-m="1" style="--pc:var(--accent)">
+      <span class="node"></span>
+      <div class="mhead" onclick="toggleMonth(this)" tabindex="0" onkeydown="keyToggle(event,this)"><div><div class="mname">Feb 2027</div><div class="mwks">THE FILING</div></div><span class="here-chip">YOU ARE HERE</span><span class="chev">▾</span></div>
+      <div class="mbody"><ul>
+        <li class="big-file"><b>FILE UK GTV ENDORSEMENT (£766).</b></li>
+        <li>Continue interviews + contracts</li>
+        <li class="side">Germany docs sit ready in the drawer</li>
+      </ul></div>
+    </article>
+
+    <article class="month" data-y="2027" data-m="2" style="--pc:var(--accent)">
+      <span class="node"></span>
+      <div class="mhead" onclick="toggleMonth(this)" tabindex="0" onkeydown="keyToggle(event,this)"><div><div class="mname">Mar 2027</div><div class="mwks">DECISION WINDOW OPENS</div></div><span class="here-chip">YOU ARE HERE</span><span class="chev">▾</span></div>
+      <div class="mbody"><ul>
+        <li>Endorsement decision window opens (5–8 wks)</li>
+        <li>Salaried offers realistically land Jan–Mar</li>
+        <li>Rate <b>≥$120/hr</b></li>
+      </ul></div>
+    </article>
+
+    <article class="month" data-y="2027" data-m="3" style="--pc:var(--accent)">
+      <span class="node"></span>
+      <div class="mhead" onclick="toggleMonth(this)" tabindex="0" onkeydown="keyToggle(event,this)"><div><div class="mname">Apr 2027</div><div class="mwks">DECISION EXPECTED</div></div><span class="here-chip">YOU ARE HERE</span><span class="chev">▾</span></div>
+      <div class="mbody"><ul>
+        <li>If endorsed → <b>visa filing</b></li>
+        <li>If refused → trigger <b>Germany Chancenkarte</b> (docs ready) and/or Dubai bridge; German MSc applications only if both stall</li>
+        <li><b>Either way: standing in April with income 3–4× higher, 3 shipped systems, 2 new certs, 50+ posts, and options.</b></li>
+      </ul></div>
+    </article>
+
+  </div>
+</section>
+
+<section id="skills">
+  <h2><b>03</b> · Skills Map</h2>
+  <div class="sk-group"><h3>Languages</h3><div class="chips"><span class="chip hot">Python (deep)</span><span class="chip hot">SQL (expert)</span><span class="chip hot">TypeScript (fluent)</span></div></div>
+  <div class="sk-group"><h3>Platforms</h3><div class="chips"><span class="chip">Microsoft Fabric</span><span class="chip">Azure Databricks</span><span class="chip">AWS</span><span class="chip">Event Hubs</span><span class="chip">Postgres/DuckDB</span></div></div>
+  <div class="sk-group"><h3>Pipelines</h3><div class="chips"><span class="chip">dbt</span><span class="chip">Airflow 3</span><span class="chip">PySpark</span><span class="chip">Structured Streaming</span><span class="chip">Delta Lake</span><span class="chip">medallion</span><span class="chip">data contracts</span><span class="chip">entity resolution</span><span class="chip">H3</span></div></div>
+  <div class="sk-group"><h3>AI engineering</h3><div class="chips"><span class="chip">LangGraph</span><span class="chip">PydanticAI</span><span class="chip">structured outputs</span><span class="chip">hybrid RAG + rerankers</span><span class="chip">GraphRAG</span><span class="chip">eval-driven dev</span><span class="chip">LangSmith</span><span class="chip">guardrails/HITL</span><span class="chip">MCP (Py+TS)</span><span class="chip">context engineering</span><span class="chip">model routing</span><span class="chip">prompt-injection defense</span><span class="chip">Ollama/vLLM literacy</span></div></div>
+  <div class="sk-group"><h3>Dev craft</h3><div class="chips"><span class="chip">bash/jq/awk</span><span class="chip">git advanced</span><span class="chip">Docker</span><span class="chip">GitHub Actions</span><span class="chip">systemd</span><span class="chip">SSH/tmux</span><span class="chip">pytest+Hypothesis</span><span class="chip">Terraform</span><span class="chip">profiling</span><span class="chip">nginx</span><span class="chip">Prometheus/Grafana</span></div></div>
+  <div class="sk-group"><h3>Product</h3><div class="chips"><span class="chip">Next.js</span><span class="chip">Vercel</span><span class="chip">vitest</span></div></div>
+  <div class="sk-group"><h3>Credentials</h3><div class="chips"><span class="chip done">AWS SAA ✓</span><span class="chip">DP-750</span><span class="chip">DP-600</span></div></div>
+</section>
+
+<section id="endgame">
+  <h2><b>04</b> · The Endgame — definition of done</h2>
+  <div class="endgame"><ul>
+    <li><b>3 systems with live demos</b> + a deployed UI</li>
+    <li>MCP servers in <b>two languages</b></li>
+    <li>Eval frameworks with real numbers (recall@5, citation accuracy, ER precision/recall)</li>
+    <li><b>50+ posts</b> + 1 recorded talk</li>
+    <li>Top-Rated gigs repriced <b>3–8×</b></li>
+    <li>Income <b>$5–6k/mo</b></li>
+    <li>DP-750 + DP-600</li>
+    <li>GTV endorsement <b>decided</b> or Germany triggered</li>
+    <li>Three African countries visited <b>without touching the visa fund</b></li>
+  </ul></div>
+  <p class="closing">"Relocate from strength in 2027, not from anxiety in 2026."</p>
+</section>
+
+<footer>Daily execution lives in the tracker app. This page is the map, not the territory. Built July 2026.</footer>
+
+<nav id="mininav">
+  <a href="#timeline">Timeline</a>
+  <a href="#tracks">Tracks</a>
+  <a href="#skills">Skills</a>
+  <a href="#endgame">Endgame</a>
+</nav>
+
+<script>
+"use strict";
+var START=new Date(2026,6,13);           // Jul 13, 2026
+var END=new Date(2027,3,30);             // Apr 30, 2027
+var TOTAL_DAYS=291, SPRINT_WEEKS=18;
+function toggleMonth(head){head.parentElement.classList.toggle("open");}
+function keyToggle(e,head){if(e.key==="Enter"||e.key===" "){e.preventDefault();toggleMonth(head);}}
+function boot(){
+ var now=new Date();
+ var today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+ var diff=Math.floor((today-START)/864e5);
+ var day=Math.min(TOTAL_DAYS,Math.max(1,diff+1));
+ var pct=Math.round(day/TOTAL_DAYS*100);
+ document.getElementById("dayLabel").textContent="Day "+day+" of "+TOTAL_DAYS;
+ var wl;
+ if(diff<0)wl="Sprint starts Jul 13";
+ else if(diff<SPRINT_WEEKS*7)wl="Week "+(Math.floor(diff/7)+1)+" of "+SPRINT_WEEKS;
+ else wl="Sprint complete ✓";
+ document.getElementById("weekLabel").textContent=wl;
+ document.getElementById("pfill").style.width=pct+"%";
+ var months=document.querySelectorAll(".month");
+ var cy=today.getFullYear(),cm=today.getMonth();
+ var current=null;
+ for(var i=0;i<months.length;i++){
+  var el=months[i];
+  if(+el.dataset.y===cy&&+el.dataset.m===cm)current=el;
+ }
+ if(!current&&today<START)current=months[0];
+ if(!current&&today>END)current=months[months.length-1];
+ if(current){current.classList.add("now","open");}
+ else months[0].classList.add("open");
+}
+boot();
+</script>
+</body>
+</html>
